@@ -1,8 +1,16 @@
 .tree-nodes {
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.tree-nodes__header {
+  display: flex;
 }
 
 .tree-nodes__toggle {
+  width: 20px;
+  height: 20px;
   margin-right: 10px;
   cursor: pointer;
 }
@@ -15,13 +23,18 @@
   cursor: default;
 }
 
-.tree-nodes li .tree-nodes__btns{
+.tree-nodes__btns {
+  display: flex;
+  gap: 10px;
+}
+
+.tree-nodes .tree-nodes__btns{
   display: none;
   margin-left: 10px;
 }
 
-.tree-nodes li:hover > .tree-nodes__btns {
-  display: block;
+.tree-nodes .tree-nodes__header:hover > .tree-nodes__btns {
+  display: flex;
   cursor: default;
 }
 
@@ -35,6 +48,3 @@
   margin-right: 8px;
 }
 
-.hide {
-  display: none;
-}

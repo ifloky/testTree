@@ -54,14 +54,14 @@ export const MainPage = () => {
     return (
       <div className="tree-nodes" key={node.id}>
         <div className="tree-nodes__header">
-          {hasChildren && (
+          {hasChildren ? (
             <div
               className="tree-nodes__toggle"
               onClick={() => toggleNode(node.id)}
             >
               {isOpen ? "▼" : "▶"}
             </div>
-          )}
+          ) : (<div className="tree-nodes__toggle"></div>)}
           <div className="tree-nodes__parent-node">{node.name}</div>
           <div className="tree-nodes__btns">
             <div className="tree-nodes-create">+</div>
