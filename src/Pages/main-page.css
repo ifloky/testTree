@@ -1,0 +1,40 @@
+.tree-nodes {
+  padding: 2rem;
+}
+
+.tree-nodes__toggle {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tree-nodes li {
+  display: flex;
+}
+
+.tree-nodes li:hover{
+  cursor: default;
+}
+
+.tree-nodes li .tree-nodes__btns{
+  display: none;
+  margin-left: 10px;
+}
+
+.tree-nodes li:hover > .tree-nodes__btns {
+  display: block;
+  cursor: default;
+}
+
+.child-node {
+  padding-left: 20px;
+}
+
+.tree-nodes__toggle {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.hide {
+  display: none;
+}
