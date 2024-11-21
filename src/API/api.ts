@@ -10,15 +10,6 @@ export interface renameData {
 
 const API_URL = "https://test.vmarmysh.com/";
 
-interface ApiResponse {
-  success: boolean;
-  data: {
-    id: string;
-    name: string;
-    parentId?: string;
-  };
-  message?: string; 
-}
 
 export const fetchTreeData = async () => {
   try {
@@ -39,7 +30,7 @@ export const fetchTreeData = async () => {
   }
 };
 
-export const createNode = async (data: createData): Promise<ApiResponse | null> => {
+export const createNode = async (data: createData): Promise<void | null> => {
   try {
     const response: Response = await fetch(API_URL + 
       'api.user.tree.node.create?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' + 
@@ -55,15 +46,13 @@ export const createNode = async (data: createData): Promise<ApiResponse | null> 
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const responseData: ApiResponse = await response.json();
-    return responseData;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
     return null;
   }
 };
 
-export const deleteNode = async (nodeId: number): Promise<ApiResponse | null> => {
+export const deleteNode = async (nodeId: number): Promise<void | null> => {
   try {
     const response: Response = await fetch(API_URL + 
       'api.user.tree.node.delete?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' +
@@ -78,15 +67,13 @@ export const deleteNode = async (nodeId: number): Promise<ApiResponse | null> =>
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const responseData: ApiResponse = await response.json();
-    return responseData;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
     return null;
   }
 };
 
-export const renameNode = async (data: renameData): Promise<ApiResponse | null> => {
+export const renameNode = async (data: renameData): Promise<void | null> => {
   try {
     const response: Response = await fetch(API_URL + 
       'api.user.tree.node.rename?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' +
@@ -102,8 +89,6 @@ export const renameNode = async (data: renameData): Promise<ApiResponse | null> 
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const responseData: ApiResponse = await response.json();
-    return responseData;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
     return null;
