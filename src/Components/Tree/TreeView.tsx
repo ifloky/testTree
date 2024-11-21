@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import "./Tree.css";
 import { TreeNode as TreeNodeType } from "./tree-types";
 

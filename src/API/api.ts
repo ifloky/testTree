@@ -41,13 +41,14 @@ export const fetchTreeData = async () => {
 
 export const createNode = async (data: createData): Promise<ApiResponse | null> => {
   try {
-    const response: Response = await fetch(API_URL + 'api.user.tree.node.create?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+    const response: Response = await fetch(API_URL + 
+      'api.user.tree.node.create?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' + 
+      `&parentNodeId=${data.parentNodeId}` + 
+      `&nodeName=${data.nodeName}`, {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      }
     });
 
     if (!response.ok) {
@@ -64,13 +65,13 @@ export const createNode = async (data: createData): Promise<ApiResponse | null> 
 
 export const deleteNode = async (nodeId: number): Promise<ApiResponse | null> => {
   try {
-    const response: Response = await fetch(API_URL + 'api.user.tree.node.delete??treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+    const response: Response = await fetch(API_URL + 
+      'api.user.tree.node.delete?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' +
+      `&nodeId=${nodeId}`, {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(nodeId),
+      }
     });
 
     if (!response.ok) {
@@ -87,13 +88,14 @@ export const deleteNode = async (nodeId: number): Promise<ApiResponse | null> =>
 
 export const renameNode = async (data: renameData): Promise<ApiResponse | null> => {
   try {
-    const response: Response = await fetch(API_URL + 'api.user.tree.node.rename?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+    const response: Response = await fetch(API_URL + 
+      'api.user.tree.node.rename?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D' +
+      `&nodeId=${data.nodeId}` + 
+      `&newNodeName=${data.newNodeName}`, {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      }
     });
 
     if (!response.ok) {

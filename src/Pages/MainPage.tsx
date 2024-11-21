@@ -10,26 +10,31 @@ export const MainPage = () => {
   const [currentNodeId, setCurrentNodeId] = useState<number | undefined>();
   const [currentNodeName, setCurrentNodeName] = useState<string>("");
 
+  const updateTree = async () => {
+    const data = await fetchTreeData();
+    setTree(data);
+  };
+
   useEffect(() => {
-    const loadTree = async () => {
-      const data = await fetchTreeData();
-      setTree(data);
-    };
-    loadTree();
+    updateTree();
   }, []);
+
 
   const handleAddNode = (parentId: number, nodeName: string) => {
     const data: createData = { parentNodeId: parentId, nodeName };
     createNode(data);
+    updateTree();
   };
 
   const handleDeleteNode = (nodeId: number) => {
     deleteNode(nodeId);
+    updateTree();
   };
 
   const handleRenameNode = (nodeId: number, newName: string) => {
-    const data: renameData = { nodeId, newNodeName: newName };
+    const data: renameData = { nodeId, newNodeName: newName };    
     renameNode(data);
+    updateTree();
   };
 
   const openPopup = (mode: "add" | "edit", nodeId?: number, nodeName?: string) => {
@@ -50,6 +55,7 @@ export const MainPage = () => {
         <Popup
           mode={popupMode}
           parentId={currentNodeId}
+          nodeId={currentNodeId}
           currentName={currentNodeName}
           onClose={() => setPopupMode(null)}
           onAdd={handleAddNode}

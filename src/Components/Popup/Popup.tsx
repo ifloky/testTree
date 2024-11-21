@@ -35,7 +35,7 @@ export const Popup: React.FC<PopupProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Введите имя узла"
+          placeholder="Введите имя"
         />
         <button onClick={handleSubmit}>{mode === "add" ? "Добавить" : "Сохранить"}</button>
         <button onClick={onClose}>Отмена</button>
