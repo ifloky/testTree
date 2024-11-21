@@ -28,7 +28,6 @@ export const Tree: React.FC<TreeProps> = ({ tree, onAdd, onEdit, onDelete }) => 
         isOpen={!!openNodes[node.id]}
         isActive={activeNodeId === node.id}
         isFirstNode={isFirstNode}
-        level={level} 
         onToggle={toggleNode}
         onSetActive={setActiveNodeId}
         onAdd={(parentId) => onAdd(parentId, "")}

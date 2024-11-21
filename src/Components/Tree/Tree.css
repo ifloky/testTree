@@ -7,6 +7,7 @@
 .tree-node__header {
   display: flex;
   width: max-content;
+  padding-right: 20px;
 }
 
 .tree-node__toggle {
@@ -35,7 +36,8 @@
   cursor: pointer;
 }
 
-.tree-node__child-node {
+.tree-node__children {
+  width: min-content;
   padding-left: 20px;
 }
 
@@ -45,3 +47,7 @@
   margin-right: 8px;
 }
 
+.tree {
+  padding: 10px;
+  overflow-x: auto;
+}

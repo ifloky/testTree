@@ -7,7 +7,6 @@ interface TreeNodeProps {
   isOpen: boolean;
   isActive: boolean;
   isFirstNode: boolean;
-  level: number; 
   onToggle: (id: number) => void;
   onSetActive: (id: number | null) => void;
   onAdd: (parentId: number) => void;
@@ -21,7 +20,6 @@ export const TreeNode: FC<TreeNodeProps> = ({
   isOpen,
   isActive,
   isFirstNode,
-  level,
   onToggle,
   onSetActive,
   onAdd,
@@ -30,7 +28,7 @@ export const TreeNode: FC<TreeNodeProps> = ({
   children,
 }) => {
   return (
-    <div className="tree-node" style={{ paddingLeft: `${level + 10}px` }}>
+    <div className="tree-node">
       <div
         className="tree-node__header"
         onClick={() => onSetActive(isActive ? null : node.id)}
