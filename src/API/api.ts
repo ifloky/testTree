@@ -1,4 +1,24 @@
+export interface createData {
+  parentNodeId: number;
+  nodeName: string;
+}
+
+export interface renameData {
+  nodeId: number;
+  newNodeName: string;
+}
+
 const API_URL = "https://test.vmarmysh.com/";
+
+interface ApiResponse {
+  success: boolean;
+  data: {
+    id: string;
+    name: string;
+    parentId?: string;
+  };
+  message?: string; 
+}
 
 export const fetchTreeData = async () => {
   try {
@@ -13,6 +33,75 @@ export const fetchTreeData = async () => {
     }
     const data = await response.json();    
     return data;
+  } catch (error) {
+    console.error("Ошибка при получении данных:", error);
+    return null;
+  }
+};
+
+export const createNode = async (data: createData): Promise<ApiResponse | null> => {
+  try {
+    const response: Response = await fetch(API_URL + 'api.user.tree.node.create?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData: ApiResponse = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Ошибка при получении данных:", error);
+    return null;
+  }
+};
+
+export const deleteNode = async (nodeId: number): Promise<ApiResponse | null> => {
+  try {
+    const response: Response = await fetch(API_URL + 'api.user.tree.node.delete??treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(nodeId),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData: ApiResponse = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Ошибка при получении данных:", error);
+    return null;
+  }
+};
+
+export const renameNode = async (data: renameData): Promise<ApiResponse | null> => {
+  try {
+    const response: Response = await fetch(API_URL + 'api.user.tree.node.rename?treeName=%7BC9232B85-AD10-459C-A44F-70CA30C60E5F%7D', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData: ApiResponse = await response.json();
+    return responseData;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
     return null;

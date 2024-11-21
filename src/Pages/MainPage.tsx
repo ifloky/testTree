@@ -1,84 +1,61 @@
 import { useEffect, useState } from "react";
-import { fetchTreeData } from "../API/api";
-import './main-page.css';
-
-export interface TreeNode {
-  id: number;
-  name: string;
-  children: TreeNode[] | null;
-}
+import { Tree } from "../Components/Tree/Tree";
+import { Popup } from "../Components/Popup/Popup";
+import { fetchTreeData, createNode, renameNode, deleteNode, createData, renameData } from "../Api/api";
+import { TreeNode } from "../Components/Tree/tree-types";
 
 export const MainPage = () => {
-  const [node, setTree] = useState<TreeNode | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
-
-  const [openNodes, setOpenNodes] = useState<Record<number, boolean>>({});
+  const [tree, setTree] = useState<TreeNode | null>(null);
+  const [popupMode, setPopupMode] = useState<"add" | "edit" | null>(null);
+  const [currentNodeId, setCurrentNodeId] = useState<number | undefined>();
+  const [currentNodeName, setCurrentNodeName] = useState<string>("");
 
   useEffect(() => {
     const loadTree = async () => {
-      setLoading(true);
-      try {
-        const treeData = await fetchTreeData();
-        if (treeData) {
-          setTree(treeData);
-        } else {
-          setError("Не удалось загрузить данные");
-        }
-      } catch (err) {
-        setError("Произошла ошибка при загрузке данных: " + err);
-      } finally {
-        setLoading(false);
-      }
+      const data = await fetchTreeData();
+      setTree(data);
     };
-
     loadTree();
   }, []);
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
-
-  const toggleNode = (id: number) => {
-    setOpenNodes((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const handleAddNode = (parentId: number, nodeName: string) => {
+    const data: createData = { parentNodeId: parentId, nodeName };
+    createNode(data);
   };
 
-  const renderTree = (node: TreeNode | null, isFirstNode: boolean = false): JSX.Element | null => {
-    if (!node) return null;
-
-    const isOpen = openNodes[node.id] || false;
-    const hasChildren = Array.isArray(node.children) && node.children.length > 0;
-
-    return (
-      <div className="tree-nodes" key={node.id}>
-        <div className="tree-nodes__header">
-          {hasChildren ? (
-            <div
-              className="tree-nodes__toggle"
-              onClick={() => toggleNode(node.id)}
-            >
-              {isOpen ? "▼" : "▶"}
-            </div>
-          ) : (<div className="tree-nodes__toggle"></div>)}
-          <div className="tree-nodes__parent-node">{node.name}</div>
-          <div className="tree-nodes__btns">
-            <div className="tree-nodes-create">+</div>
-            {!isFirstNode && <div className="tree-nodes-delete">-</div>}
-            {!isFirstNode && <div className="tree-nodes-update">/</div>}
-          </div>
-        </div>
-        {isOpen && hasChildren && (
-          <div className="child-node">
-            {node.children?.map((child) =>
-              renderTree(child, false)
-            )}
-          </div>
-        )}
-      </div>
-    );
+  const handleDeleteNode = (nodeId: number) => {
+    deleteNode(nodeId);
   };
 
-  return <div>{renderTree(node, true)}</div>;
+  const handleRenameNode = (nodeId: number, newName: string) => {
+    const data: renameData = { nodeId, newNodeName: newName };
+    renameNode(data);
+  };
+
+  const openPopup = (mode: "add" | "edit", nodeId?: number, nodeName?: string) => {
+    setPopupMode(mode);
+    setCurrentNodeId(nodeId);
+    setCurrentNodeName(nodeName || "");
+  };
+
+  return (
+    <div>
+      <Tree
+        tree={tree}
+        onAdd={(parentId) => openPopup("add", parentId)}
+        onEdit={(nodeId, nodeName) => openPopup("edit", nodeId, nodeName)}
+        onDelete={handleDeleteNode}
+      />
+      {popupMode && (
+        <Popup
+          mode={popupMode}
+          parentId={currentNodeId}
+          currentName={currentNodeName}
+          onClose={() => setPopupMode(null)}
+          onAdd={handleAddNode}
+          onEdit={handleRenameNode}
+        />
+      )}
+    </div>
+  );
 };

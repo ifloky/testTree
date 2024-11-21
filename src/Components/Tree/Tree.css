@@ -1,0 +1,47 @@
+.tree-node {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.tree-node__header {
+  display: flex;
+  width: max-content;
+}
+
+.tree-node__toggle {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tree-node__btns {
+  display: flex;
+  margin-left: 10px;
+  gap: 10px;
+}
+
+.tree-node__btns button{
+  background-color: transparent;
+  font-size: 12px;
+  border-radius: 7px;
+  border: 1px gray solid;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+.tree-node__child-node {
+  padding-left: 20px;
+}
+
+.tree-node__toggle {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 8px;
+}
+
